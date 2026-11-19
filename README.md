@@ -1,7 +1,7 @@
-# orcamento.charmepisos.com.br
+# charmepisos.com.br
 
 Landing page de orçamento da Charme & Pisos. Estática, publicada pelo GitHub Pages a partir da pasta `docs/`.
-Fica separada do site institucional (D:\dev\charmepisos-site → charmepisos.com.br).
+Substitui o site antigo que estava na HostGator.
 
 ## Como atualizar
 1. Edite `C:\Users\DELL\Documents\CharmeCRM\site\landing.html` (as imagens ficam em `site\img`).
@@ -12,6 +12,6 @@ Fica separada do site institucional (D:\dev\charmepisos-site → charmepisos.com
 Não edite `docs/` à mão: o próximo `publicar.py` apaga e recria a pasta.
 
 ## Domínio
-`docs/CNAME` = orcamento.charmepisos.com.br.
-No DNS do domínio: registro CNAME `orcamento` → `arrudaaldo.github.io`.
+`docs/CNAME` = charmepisos.com.br.
+No DNS do domínio: 4 registros A (185.199.108–111.153) e CNAME `www` → `arrudaaldo.github.io`. MX/SPF do Titan (e-mail) não mexer.
 O formulário e os botões não gravam nada: só abrem o WhatsApp (41) 99728-7915 com a mensagem pronta.
