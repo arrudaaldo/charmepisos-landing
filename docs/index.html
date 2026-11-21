@@ -88,6 +88,7 @@ h2{font-size:clamp(30px,3.6vw,42px);font-weight:900}
 .texto-linha h3{font-size:clamp(36px,4vw,50px);font-weight:900;margin:4px 0 6px}
 .texto-linha .selo{display:inline-block;background:var(--rosa);color:#fff;font-size:12.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;border-radius:6px;padding:4px 10px;margin-bottom:14px}
 .texto-linha p{font-size:18px;color:var(--cinza)}
+#new-way .so-cel{display:none}
 .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:24px 0 26px}
 .specs div{border:1px solid var(--linha);border-radius:12px;padding:12px 16px;background:#fff}
 .specs .agua b{display:flex;align-items:center;gap:6px}
@@ -149,6 +150,12 @@ h2{font-size:clamp(30px,3.6vw,42px);font-weight:900}
 .op a.esc{text-decoration:none;display:inline-flex;align-items:center;gap:6px}
 .op .esc.off{border-color:var(--linha);color:var(--cinza);cursor:default;background:#fff}
 .op.sel{border-color:var(--verde);box-shadow:inset 0 0 0 1px var(--verde)}
+.op{cursor:pointer;user-select:none}
+.op.off{cursor:default}
+.op .ck{width:26px;height:26px;border-radius:50%;border:2px solid #c5d3d0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:900;flex:none}
+.op.sel .ck{background:var(--verde);border-color:var(--verde)}
+.sim-dica{font-size:14px;color:var(--cinza);margin:0 0 10px}
+.sim-btn{width:100%;margin-top:14px}
 .op.off{opacity:.45}
 .sim-aviso{font-size:13.5px;color:var(--cinza);margin-top:12px}
 
@@ -278,12 +285,17 @@ footer img{height:40px}
 @media (max-width:920px){
   .topo nav{display:none}
   .hero{min-height:600px;align-items:flex-end}
-  .hero-foto{width:100%}
+  .hero-foto{width:100%;background-size:cover;background-position:35% 50%}
+  .selo-topo{font-size:12.5px;padding:6px 12px;letter-spacing:0;white-space:nowrap}
   .hero-onda{width:100%;height:38%}
   .hero::before{background:linear-gradient(180deg,rgba(5,45,43,.55) 0%,rgba(5,45,43,.92) 55%)}
   .numeros{gap:26px}
   .destaque,.destaque.inv,.sim-caixa,.vs,.fecha .wrap{grid-template-columns:1fr}
   .destaque.inv .vitrine{order:-1}
+  #new-way .destaque{display:flex;flex-direction:column;align-items:stretch;gap:26px}
+  #new-way .texto-linha{order:-1}
+  #new-way .so-desk{display:none}
+  #new-way .so-cel{display:flex}
   .linhas{grid-template-columns:1fr 1fr}
   .deps{grid-template-columns:1fr}
   .proc{grid-template-columns:1fr 1fr}
@@ -291,7 +303,7 @@ footer img{height:40px}
   .op{grid-template-columns:60px 1fr;}
   .op img{width:60px;height:46px}
   .op .val{grid-column:2;text-align:left}
-  .op .esc{grid-column:1/-1}
+  .op{grid-template-columns:60px 1fr auto}
   form{grid-template-columns:1fr}
   .sec{padding:64px 0}
   .barra-cel{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--linha);padding:10px 14px;gap:10px}
@@ -321,7 +333,6 @@ footer img{height:40px}
     <p>Do orçamento à instalação, a gente te acompanha em cada etapa, para a sua obra ser tranquila do começo ao fim.</p>
     <div class="ctas">
       <a class="btn btn-rosa" href="#simulador">Montar meu orçamento</a>
-      <a class="btn btn-linha" href="#como-funciona">Como funciona</a>
     </div>
     <p class="obs-min-topo">Instalações a partir de 25 m² · Curitiba e região</p>
   </div>
@@ -357,11 +368,11 @@ footer img{height:40px}
         <div class="seg" id="filtro"><button type="button" data-f="todos" aria-pressed="true">Todos</button><button type="button" data-f="lam" aria-pressed="false">Laminado</button><button type="button" data-f="vin" aria-pressed="false">Vinílico</button></div>
         <span class="rot">O imóvel está</span>
         <div class="seg" id="imovel"><button type="button" data-i="vazio" aria-pressed="true">Vazio</button><button type="button" data-i="moveis" aria-pressed="false">Com móveis</button></div>
-        <a class="btn btn-rosa" id="whats-geral" target="_blank" rel="noopener" style="width:100%" href="#">Pedir orçamento no WhatsApp</a>
-        <p style="margin:10px 0 0;font-size:13px">Ou escolha uma linha ao lado: a mensagem já vai pronta.</p>
       </div>
       <div>
+        <p class="sim-dica">Toque na linha que mais te agradou. Se ainda não sabe, pode pedir sem escolher.</p>
         <div class="sim-res" id="res"></div>
+        <a class="btn btn-rosa sim-btn" id="whats-geral" target="_blank" rel="noopener" href="#">Pedir orçamento no WhatsApp</a>
         <p class="sim-aviso">A proposta chega com piso, instalação, rodapé e acabamentos, e é confirmada depois da visita técnica.</p>
       </div>
     </div>
@@ -402,8 +413,7 @@ footer img{height:40px}
       </div>
     </div>
     <div class="texto-linha">
-      <span class="marca">Durafloor</span>
-      <h3>New Way</h3>
+      <h3>Durafloor New Way</h3>
       <span class="selo">O mais escolhido pelos nossos clientes</span>
       <p>O equilíbrio entre preço, beleza e durabilidade. Cores amadeiradas para todos os estilos, encaixe click e a garantia mais longa da categoria.</p>
       <div class="specs">
@@ -412,8 +422,9 @@ footer img{height:40px}
         <div><b>AC4</b><span>resistência a riscos e abrasão</span></div>
         <div><b>7 mm</b><span>com encaixe click</span></div>
       </div>
-      <a class="btn btn-rosa" target="_blank" rel="noopener" href="https://wa.me/5541997287915?text=Ol%C3%A1%21%20Quero%20um%20or%C3%A7amento%20do%20piso%20laminado%20Durafloor%20New%20Way.">Quero orçamento do New Way</a> <a class="btn btn-linha esc" href="#simulador" style="margin-left:8px">Comparar com outras linhas</a>
+      <a class="btn btn-rosa so-desk" target="_blank" rel="noopener" href="https://wa.me/5541997287915?text=Ol%C3%A1%21%20Quero%20um%20or%C3%A7amento%20do%20piso%20laminado%20Durafloor%20New%20Way.">Quero orçamento do New Way</a>
     </div>
+    <a class="btn btn-rosa so-cel" target="_blank" rel="noopener" href="https://wa.me/5541997287915?text=Ol%C3%A1%21%20Quero%20um%20or%C3%A7amento%20do%20piso%20laminado%20Durafloor%20New%20Way.">Quero orçamento do New Way</a>
   </div>
 </section>
 
@@ -545,12 +556,14 @@ function desenhar(){
   var a = +document.getElementById('area').value;
   document.getElementById('area-v').textContent = a + ' m²';
   document.getElementById('f-area').value = a;
+  if (escolhida && !LINHAS.some(function(l){ return (filtro === 'todos' || l.t === filtro) && l.marca + ' ' + l.nome === escolhida; })) escolhida = '';
   var html = LINHAS.filter(function(l){ return filtro === 'todos' || l.t === filtro; }).map(function(l){
     var m2 = (l.t === 'vin' ? l.m2 : l.m2 + INSTAL[imovel]) * (1 - DESC), off = l.t === 'vin' && imovel === 'moveis';
     var nome = l.marca + ' ' + l.nome;
-    return { h: '<div class="op' + (off ? ' off' : '') + (escolhida === nome ? ' sel' : '') + '"><img src="' + l.img + '" alt="">' +
+    if (off && escolhida === nome) escolhida = '';
+    return { h: '<div class="op' + (off ? ' off' : '') + (escolhida === nome ? ' sel' : '') + '" data-nome="' + nome + '" data-t="' + l.t + '"' + (off ? '' : ' role="button" tabindex="0" aria-pressed="' + (escolhida === nome) + '"') + '><img src="' + l.img + '" alt="">' +
       '<div><small>' + l.marca + '</small><h5>' + l.nome + '</h5><span class="nota' + (off ? ' r' : '') + '">' + (off ? 'Precisa do imóvel vazio' : l.nota) + '</span></div>' +
-      (off ? '<span class="esc off">Só imóvel vazio</span>' : '<a class="esc" target="_blank" rel="noopener" href="' + linkWhats(l.t === 'vin' ? 'piso ' + nome.toLowerCase() : 'piso laminado ' + nome, a) + '">Pedir no WhatsApp</a>') + '</div>', v: a * m2 };
+      '<span class="ck" aria-hidden="true">' + (escolhida === nome && !off ? '&#10003;' : '') + '</span></div>', v: a * m2 };
   }).sort(function(x, y){ return x.v - y.v; }).map(function(x){ return x.h; }).join('');
   document.getElementById('res').innerHTML = html;
 }
@@ -561,10 +574,21 @@ function linkWhats(oque, a){
   return 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(txt);
 }
 function atualizarGeral(){
-  var a = document.getElementById('area').value;
-  var tipo = filtro === 'lam' ? 'piso laminado' : filtro === 'vin' ? 'piso vinílico' : 'laminado ou vinílico (quero comparar)';
+  var a = document.getElementById('area').value, tipo;
+  if (escolhida) tipo = /^Vinílico/.test(escolhida) ? 'piso ' + escolhida.toLowerCase() : 'piso laminado ' + escolhida;
+  else tipo = filtro === 'lam' ? 'piso laminado' : filtro === 'vin' ? 'piso vinílico' : 'laminado ou vinílico (quero comparar)';
   document.getElementById('whats-geral').href = linkWhats(tipo, a);
 }
+// tocar numa linha marca/desmarca; o botão de baixo leva a linha marcada na mensagem
+function tocarLinha(e){
+  var op = e.target.closest('.op'); if (!op || op.classList.contains('off')) return;
+  if (e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+  if (e.type === 'keydown') e.preventDefault();
+  escolhida = escolhida === op.dataset.nome ? '' : op.dataset.nome;
+  desenhar(); atualizarGeral();
+}
+document.getElementById('res').addEventListener('click', tocarLinha);
+document.getElementById('res').addEventListener('keydown', tocarLinha);
 document.getElementById('area').addEventListener('input', function(){ desenhar(); atualizarGeral(); });
 [['filtro','f'],['imovel','i']].forEach(function(p){
   document.getElementById(p[0]).addEventListener('click', function(e){
