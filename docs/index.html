@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Charme &amp; Pisos · Piso laminado e vinílico instalado em Curitiba</title>
 <meta name="description" content="Durafloor, Quick-Step, Eucafloor e Floorest com instalação em Curitiba e região. Compare linhas e valores e receba seu orçamento detalhado.">
+<!-- Google Analytics 4 (modo de consentimento: sem cookies até a pessoa aceitar o aviso) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z1DQ3EKER4"></script>
+<script>
+window.dataLayer = window.dataLayer || []; function gtag(){ dataLayer.push(arguments); }
+var ESCOLHA_COOKIES = null; try { ESCOLHA_COOKIES = localStorage.getItem('charme_cookies'); } catch (e) {}
+var OK_COOKIES = ESCOLHA_COOKIES === 'sim' ? 'granted' : 'denied';
+gtag('consent', 'default', { analytics_storage: OK_COOKIES, ad_storage: OK_COOKIES, ad_user_data: OK_COOKIES, ad_personalization: OK_COOKIES });
+gtag('js', new Date()); gtag('config', 'G-Z1DQ3EKER4');
+</script>
 <link rel="canonical" href="https://charmepisos.com.br/">
 <link rel="icon" href="img/favicon.png" type="image/png">
 <meta name="theme-color" content="#052d2b">
@@ -273,6 +282,12 @@ h2{font-size:clamp(30px,3.6vw,42px);font-weight:900}
 .loja{margin-top:30px;padding-top:22px;border-top:1px solid rgba(255,255,255,.15);font-size:15.5px}
 .loja b{color:#fff}
 form{background:#fff;border-radius:18px;padding:26px;color:var(--tinta);display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cookies{position:fixed;left:16px;right:16px;bottom:16px;z-index:40;max-width:720px;margin:0 auto;background:#fff;border:1px solid var(--linha);border-radius:14px;box-shadow:0 10px 30px rgba(5,45,43,.18);padding:14px 18px;display:flex;align-items:center;gap:16px;font-size:15px}
+.cookies[hidden]{display:none}
+.cookies p{flex:1;color:var(--tinta)}
+.cookies div{display:flex;gap:8px;flex:none}
+.cookies .btn{padding:9px 16px;font-size:15px}
+@media (max-width:920px){ .cookies{bottom:80px;flex-direction:column;align-items:stretch;gap:10px} .cookies div .btn{flex:1} }
 .escolha{grid-column:1/-1;background:var(--claro);border-radius:12px;padding:12px 16px;font-size:15px;display:none}
 .escolha b{color:var(--verde)}
 label.c{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:var(--cinza)}
@@ -538,6 +553,7 @@ footer img{height:40px}
   <div class="wrap"><img src="img/logo.png" alt="Charme &amp; Pisos"><span>Av. Iguaçu, 409 · Loja 04 · Rebouças · Curitiba – PR · (41) 99728-7915 · charmepisos@gmail.com</span></div>
 </footer>
 <div class="faixa"><i style="flex:3;background:#052d2b"></i><i style="flex:2;background:#00a1a5"></i><i style="flex:1;background:#fd4a45"></i></div>
+<div class="cookies" id="cookies" hidden><p>Usamos cookies para medir as visitas e melhorar o site e os nossos anúncios.</p><div><button type="button" class="btn btn-linha esc" id="ck-nao">Recusar</button><button type="button" class="btn btn-rosa" id="ck-sim">Aceitar</button></div></div>
 <div class="barra-cel"><a class="btn btn-linha esc" href="#simulador">Simular</a><a class="btn btn-rosa" target="_blank" rel="noopener" href="https://wa.me/5541997287915?text=Ol%C3%A1%21%20Estava%20no%20site%20de%20voc%C3%AAs%20e%20gostaria%20de%20solicitar%20um%20or%C3%A7amento%20de%20piso.">WhatsApp</a></div>
 
 <script>
@@ -629,11 +645,35 @@ function enviar(e){
   linhas.push('Interesse: ' + v('interesse'));
   linhas.push('Imóvel: ' + v('imovel').toLowerCase());
   var url = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(linhas.join('\n'));
+  medir('clique_whatsapp', { botao: 'formulario', interesse: v('interesse'), area_m2: Number(v('area').replace(',', '.')) || 0 });
   document.getElementById('ok-link').href = url; document.getElementById('ok').style.display = 'block';
   window.open(url, '_blank', 'noopener');
   return false;
 }
 desenhar(); atualizarGeral();
+
+// ===== medição (Google Analytics 4): cliques no WhatsApp, com o botão de origem =====
+function medir(ev, p){ try { if (window.gtag) gtag('event', ev, p); } catch (e) {} }
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a[href*="wa.me"]'); if (!a || a.id === 'ok-link') return;
+  var sec = a.closest('section[id]');
+  var p = { botao: a.closest('.barra-cel') ? 'barra_celular' : a.closest('header') ? 'topo' : sec ? sec.id : 'outro' };
+  if (a.id === 'whats-geral') { p.linha = escolhida || 'nenhuma'; p.area_m2 = +document.getElementById('area').value; }
+  medir('clique_whatsapp', p);
+});
+// aviso de cookies (LGPD): sem escolha, aparece; a escolha fica guardada neste navegador
+(function(){
+  var caixa = document.getElementById('cookies'); if (!caixa) return;
+  if (!ESCOLHA_COOKIES) caixa.hidden = false;
+  function escolher(sim){
+    try { localStorage.setItem('charme_cookies', sim ? 'sim' : 'nao'); } catch (e) {}
+    var v = sim ? 'granted' : 'denied';
+    gtag('consent', 'update', { analytics_storage: v, ad_storage: v, ad_user_data: v, ad_personalization: v });
+    caixa.hidden = true;
+  }
+  document.getElementById('ck-sim').addEventListener('click', function(){ escolher(true); });
+  document.getElementById('ck-nao').addEventListener('click', function(){ escolher(false); });
+})();
 </script>
 </body>
 </html>
